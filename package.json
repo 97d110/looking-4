@@ -1,11 +1,13 @@
 {
   "name": "looking-4",
-  "module": "index.ts",
+  "module": "index.tsx",
   "type": "module",
-  "devDependencies": {
-    "bun-types": "latest"
+  "scripts": {
+    "dev": "bun --hot run src/index.js"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+  "devDependencies": {
+    "bun-types": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }

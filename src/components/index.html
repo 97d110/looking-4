@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" html dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+    <script src="https://unpkg.com/htmx.org/dist/ext/json-enc.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .hidden {
+          display: none;
+        }
+      }
+    </style>
+    <title>Looking-4</title>
+  </head>
+
+  <body>
+    <header class="container mx-auto">
+      <hgroup>
+        <h1 class="text-5xl text-center pb-10 pt-10 font-bold">Looking-4</h1>
+        <h2 class="text-2xl text-center pb-10 font-semibold">
+          אתר לעדכונים אחר אזרחים נעדרים
+        </h2>
+      </hgroup>
+    </header>
+
+    <main class="container flex-col w-full mx-auto mt-10">
+      <div
+        class="relative lg:w-2/3 mx-auto mb-10 p-6 shadow-xl ring-1 ring-gray-900/5 bg-white sm:rounded-lg sm:px-10 md:w-full"
+      >
+        <div class="flex">
+          <button id="toggle-create-profile-form" class="text-2xl text-center">
+            <span id="close-icon" class="ml-4 text-2xl font-bold hidden"
+              >&and;</span
+            >
+            <span id="open-icon" class="ml-4 text-2xl font-bold">&or;</span>
+            הוספת פרופיל
+          </button>
+        </div>
+        <div id="create-profile-form" class="w-full flex-col hidden">
+          <form
+            hx-post="/profiles"
+            hx-target="#profiles"
+            hx-ext="multipart/form-data"
+            enctype="multipart/form-data"
+            method="post"
+            _="on submit target.reset()"
+          >
+            <div class="mt-8 w-full flex justify-start items-center">
+              <div class="relative w-1/2 flex-col justify-start items-center">
+                <label
+                  htmlFor="firstName"
+                  class="block text-lg mb-4 font-medium leading-6 text-gray-900"
+                >
+                  שם פרטי
+                </label>
+                <div
+                  class="block w-2/3 rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <input
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    aria-label="שם פרטי"
+                    placeholder="שם פרטי"
+                    style="all: unset; width: 100%"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="relative w-1/2">
+                <label
+                  htmlFor="lastName"
+                  class="block text-lg mb-4 leading-6 text-gray-900"
+                >
+                  שם משפחה
+                </label>
+                <div
+                  class="block w-2/3 rounded-md border-0 py-1.5 px-2 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <input
+                    id="lastName"
+                    name="lastName"
+                    type="text"
+                    aria-label="שם משפחה"
+                    placeholder="שם משפחה"
+                    style="all: unset; width: 100%"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="w-full flex justify-start items-start py-4 mt-4">
+              <label
+                htmlFor="image"
+                class="span w-2/12 text-lg text-start font-medium leading-6 text-gray-900"
+              >
+                תמונה
+              </label>
+              <div class="w-8/12 flex justify-center items-center">
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  aria-label="תמונה"
+                  placeholder="תמונה"
+                  class="text-sm text-slate-500 file:ml-20 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold hover:file:cursor-pointer file:bg-slate-100 file:text-slate-800 hover:file:bg-slate-700 hover:file:text-slate-50"
+                  required
+                />
+              </div>
+            </div>
+            <div class="w-full mt-4 flex justify-center items-center">
+              <button
+                type="submit"
+                class="ml-8 py-2 px-8 rounded-full border-0 text-lg font-semibold hover:cursor-pointer bg-slate-100 text-slate-800 hover:bg-slate-700 hover:text-slate-50"
+              >
+                צור פרופיל
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <section
+        id="profiles"
+        hx-get="/profiles"
+        hx-trigger="load"
+        class="w-full pb-12"
+      ></section>
+    </main>
+
+    <script>
+      const formContainer = document.querySelector("#create-profile-form");
+      const closeIcon = document.querySelector("#close-icon");
+      const openIcon = document.querySelector("#open-icon");
+      const toggleFormBtn = document.querySelector(
+        "#toggle-create-profile-form"
+      );
+      toggleFormBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        formContainer.classList.toggle("hidden");
+        closeIcon.classList.toggle("hidden");
+        openIcon.classList.toggle("hidden");
+      });
+    </script>
+  </body>
+</html>
